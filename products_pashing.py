@@ -33,7 +33,10 @@ def liAnalyse(li, id, roastery):
     
     img_tag = li.find('img')
     img_src = img_tag.get('src')
-    
+    index = img_src.find('?')
+    if index != -1:
+        img_src = img_src[:index]
+        
     result['thumbnailUrl'] = img_src
     result['dateAdded'] = re.findall(pattern, img_src)[0]
     
@@ -43,7 +46,8 @@ def liAnalyse(li, id, roastery):
     #array
     # li_texts = li.text.strip().splitlines()
     li_texts = [tag.get_text() for tag in li.find_all()]
-    # print(f'li_texts : {li_texts}')
+    
+    strong_text_list = [strong_tag.get_text() for strong_tag in li.find_all('strong')]
     
     if 'BEST' in li_texts: 
         result['best'] = True
@@ -57,16 +61,15 @@ def liAnalyse(li, id, roastery):
         result['soldOut'] = True
         li_texts.remove('일시 품절')
     
-    result['name'] = li_texts[0]
-    result['price'] = li_texts[1]
+    result['name'] = strong_text_list[0]
+    result['price'] = strong_text_list[1][:-1]
 
     return result
 
 # 페이지의 모든 상품이 들어간 li태그 가져온 후 dict형태로 정리해서 return
-def getProductsFromStore(roastery, url):
+def getProductsFromStore(roastery, url, id):
     print(f'{roastery} 진입')
     result = []
-    id = 1
         
     # Selenium 웹 드라이버 시작
     driver = webdriver.Chrome() 
@@ -82,9 +85,6 @@ def getProductsFromStore(roastery, url):
     
     # BeautifulSoup으로 HTML 파싱
     soup = BeautifulSoup(html, 'html.parser')
-    print(f'soup 취득 완료')
-
-    # ul_elements = driver.find_elements(By.CSS_SELECTOR, ".whole_products ul")
     
     wholeProducts_element = soup.find('div', class_='whole_products')
     ul_elements = wholeProducts_element.find_all('ul')
@@ -100,4 +100,4 @@ def getProductsFromStore(roastery, url):
     time.sleep(1)
     print(f'{roastery}의 데이터 취득 완료')
     
-    return result
+    return result, id
