@@ -1,6 +1,7 @@
-from PIL import Image
+from PIL import Image, ImageFile
 import time
 import os
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def imageResizing(fileName):
     imgPath = os.path.join('public/img', fileName)

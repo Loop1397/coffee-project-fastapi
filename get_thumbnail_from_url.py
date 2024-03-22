@@ -4,6 +4,7 @@ import re
 import requests
 import time
 import os
+from image_resize import imageResizing
 
 # url에서 파일 이름 가져오기
 def extract_filename(url):
@@ -33,14 +34,17 @@ def getThumbnailFromUrl(productsData):
         response = requests.get(url)
         with open(os.path.join('public/img/', fileName), 'wb') as file:
             file.write(response.content)
+            
+        data['filePath'] = os.path.join('./img/', fileName)
         
-        break
+        imageResizing(fileName)
     
     return productsData
 
-with open('products.json', 'r') as f:
-    json_data = json.load(f)
+# TEST
+# with open('products.json', 'r') as f:
+#     json_data = json.load(f)
 
-json_data = list(json_data)
+# json_data = list(json_data)
 
-getThumbnailFromUrl(json_data)
+# print(getThumbnailFromUrl(json_data))
