@@ -42,6 +42,5 @@ def getStoreUrls():
         result[h2_tag.text] = a_tag['href']
 
     time.sleep(1)
-    print('믕스토리 url 취득')
     
     return result

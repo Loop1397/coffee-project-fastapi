@@ -24,5 +24,3 @@ def imageResizing(fileName):
     outputImg = image.resize((target_width, target_height))
     outputImg.save(imgPath)
     
-imageResizing('chapter.png')
-imageResizing('nz.png')

@@ -38,13 +38,15 @@ def getThumbnailFromUrl(productsData):
         data['filePath'] = os.path.join('./img/', fileName)
         
         imageResizing(fileName)
+        break
     
     return productsData
 
 # TEST
+
 # with open('products.json', 'r') as f:
 #     json_data = json.load(f)
 
 # json_data = list(json_data)
 
-# print(getThumbnailFromUrl(json_data))
+# # print(getThumbnailFromUrl(json_data))

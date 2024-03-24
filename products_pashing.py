@@ -68,7 +68,6 @@ def liAnalyse(li, id, roastery):
 
 # 페이지의 모든 상품이 들어간 li태그 가져온 후 dict형태로 정리해서 return
 def getProductsFromStore(roastery, url, id):
-    print(f'{roastery} 진입')
     result = []
         
     # Selenium 웹 드라이버 시작
@@ -98,6 +97,5 @@ def getProductsFromStore(roastery, url, id):
     
     
     time.sleep(1)
-    print(f'{roastery}의 데이터 취득 완료')
     
     return result, id
